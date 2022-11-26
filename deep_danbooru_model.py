@@ -671,5 +671,5 @@ class DeepDanbooruModel(nn.Module):
     def load_state_dict(self, state_dict, **kwargs):
         self.tags = state_dict.get('tags', [])
 
-#        super(DeepDanbooruModel, self).load_state_dict({k: v for k, v in state_dict.items() if k != 'tags'})
+        super(DeepDanbooruModel, self).load_state_dict({k: v for k, v in state_dict.items() if k != 'tags'})
 
