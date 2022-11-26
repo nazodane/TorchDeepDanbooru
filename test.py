@@ -88,7 +88,7 @@ def trt_fn(input):
     r = np.empty(9176, dtype = np.float16)
 
     d_input = cuda.mem_alloc(1 * 3 * 512 * 512 * 2) # half float
-    d_output = cuda.mem_alloc(1 * 9176 * 3)
+    d_output = cuda.mem_alloc(1 * 9176 * 2)
 
     bindings = [int(d_input), int(d_output)]
 
