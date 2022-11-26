@@ -45,10 +45,11 @@ with torch.no_grad():# , torch.autocast("cuda")
 # $ pip install -U torchdynamo
 # $ pip install -U triton
 #    import torchdynamo
+#    # torchdynamo+triton first run
 #    dynamo_fn = torchdynamo.optimize("inductor")(model)
 #    za = dynamo_fn(x)[0].detach().cpu().numpy()
 
-#    # torchdynamo measure performance -> XXit/s on RTX 3060
+#    # torchdynamo+triton measure performance -> XXit/s on RTX 3060
 #    for n in tqdm.tqdm(range(10)):
 #        dynamo_fn(x)
 
@@ -56,6 +57,17 @@ with torch.no_grad():# , torch.autocast("cuda")
 #    return launcher(
 #  File "<string>", line 4, in launcher
 # TypeError: function takes exactly 13 arguments (10 given)
+
+# $ pip install torch-tensorrt -> not yet available for pytorch 1.3.x
+# https://github.com/pytorch/TensorRT/pull/1477
+#    # torchdynamo+tensorrt first run
+#    dynamo_fn2 = torchdynamo.optimize("fx2trt")(model)
+#    zb = dynamo_fn2(x)[0].detach().cpu().numpy()
+
+#    # torchdynamo+tensorrt measure performance -> XXit/s on RTX 3060
+#    for n in tqdm.tqdm(range(10)):
+#        dynamo_fn2(x)
+
 
 #    torch.onnx.export(scripted_fn, [x],  "scripted.onnx")
 ##    torch.onnx.export(traced_fn, [x],  "traced.onnx")
@@ -131,6 +143,7 @@ for i, p in enumerate(y):
         print("aa:", model.tags[i], aa[i])
 #    if za[i] >= 0.5:
 #        print("za:", model.tags[i], za[i])
+#    if zb[i] >= 0.5:
+#        print("zb:", model.tags[i], zb[i])
     if ab[i] >= 0.5:
         print("ab:", model.tags[i], ab[i])
-
