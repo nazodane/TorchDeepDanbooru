@@ -42,6 +42,21 @@ with torch.no_grad():# , torch.autocast("cuda")
     for n in tqdm.tqdm(range(10)):
         traced_fn(x)
 
+# $ pip install -U torchdynamo
+# $ pip install -U triton
+#    import torchdynamo
+#    dynamo_fn = torchdynamo.optimize("inductor")(model)
+#    za = dynamo_fn(x)[0].detach().cpu().numpy()
+
+#    # torchdynamo measure performance -> XXit/s on RTX 3060
+#    for n in tqdm.tqdm(range(10)):
+#        dynamo_fn(x)
+
+#  File "/home/nazo/.local/lib/python3.10/site-packages/torchinductor/triton_ops/autotune.py", line 156, in run
+#    return launcher(
+#  File "<string>", line 4, in launcher
+# TypeError: function takes exactly 13 arguments (10 given)
+
 #    torch.onnx.export(scripted_fn, [x],  "scripted.onnx")
 ##    torch.onnx.export(traced_fn, [x],  "traced.onnx")
 
@@ -114,6 +129,8 @@ for i, p in enumerate(y):
         print("z:", model.tags[i], z[i])
     if aa[i] >= 0.5:
         print("aa:", model.tags[i], aa[i])
+#    if za[i] >= 0.5:
+#        print("za:", model.tags[i], za[i])
     if ab[i] >= 0.5:
         print("ab:", model.tags[i], ab[i])
 
